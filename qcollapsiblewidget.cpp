@@ -34,8 +34,6 @@ THE SOFTWARE.
 QCollapsibleWidget::QCollapsibleWidget(QWidget *parent)
     : QWidget(parent),
       layout(new QVBoxLayout),
-      doingStuff(false),
-      originalHeight(0),
       animationSpeed(500)
 {
     layout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding));
@@ -68,44 +66,35 @@ void QCollapsibleWidget::addWidget(QWidget *widget, const QString &headerTitle, 
 
 void QCollapsibleWidget::buttonPressed()
 {
-    if(doingStuff) {
-        return;
-    }
-
-    doingStuff = true;
     auto header = qApp->widgetAt(QCursor::pos());
     const auto index = layout->indexOf(header);
     auto next = layout->itemAt(index + 1)->widget();
-    anim = std::make_unique<QPropertyAnimation>(next, "maximumHeight");
+    auto anim = new QPropertyAnimation(next, "maximumHeight", this);
     anim->setDuration(animationSpeed);
-    connect(anim.get(), &QPropertyAnimation::finished, this, &QCollapsibleWidget::done);
     if(!next->isVisible()) {
         const auto height = next->height();
         next->setFixedHeight(1);
         next->setHidden(false);
         anim->setStartValue(next->height());
         anim->setEndValue(height);
+        connect(anim, &QPropertyAnimation::finished, this, [anim](){
+            auto widget = static_cast<QWidget *>(anim->targetObject());
+            widget->setMinimumHeight(widget->height());
+            anim->deleteLater();
+        });
     }
     else {
+        const auto originalHeight = next->height();
         next->setMinimumHeight(1);
-        originalHeight = next->height();
         anim->setStartValue(next->height());
         anim->setEndValue(1);
+        connect(anim, &QPropertyAnimation::finished, this, [anim, originalHeight](){
+            auto widget = static_cast<QWidget *>(anim->targetObject());
+            widget->setHidden(true);
+            widget->setFixedHeight(originalHeight);
+            anim->deleteLater();
+        });
     }
 
-    anim->start();
-}
-
-void QCollapsibleWidget::done()
-{
-    auto widget = static_cast<QWidget *>(anim->targetObject());
-    if(widget->height() > 1) {
-        widget->setMinimumHeight(widget->height());
-    }
-    else {
-        widget->setHidden(true);
-        widget->setFixedHeight(originalHeight);
-    }
-
-    doingStuff = false;
+    anim->start(QPropertyAnimation::DeleteWhenStopped);
 }

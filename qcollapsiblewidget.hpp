@@ -39,15 +39,6 @@ class QCollapsibleWidget : public QWidget
     //! Layout
     QVBoxLayout *layout;
 
-    //! Active animation
-    std::unique_ptr<QPropertyAnimation> anim;
-
-    //! Animation in progress
-    bool doingStuff;
-
-    //! Original height of the widget before collapsing
-    int originalHeight;
-
     //! Animation speed
     int animationSpeed;
 
@@ -77,8 +68,6 @@ signals:
 public slots:
 
     void buttonPressed();
-
-    void done();
 };
 
 #endif // QACCORDIONWIDGET_HPP
