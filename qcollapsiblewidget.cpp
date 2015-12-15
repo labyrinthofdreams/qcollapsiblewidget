@@ -72,11 +72,11 @@ void QCollapsibleWidget::buttonPressed()
     auto anim = new QPropertyAnimation(next, "maximumHeight", this);
     anim->setDuration(animationSpeed);
     if(!next->isVisible()) {
-        const auto height = next->height();
+        const auto widgetHeight = next->height();
         next->setFixedHeight(1);
         next->setHidden(false);
         anim->setStartValue(next->height());
-        anim->setEndValue(height);
+        anim->setEndValue(widgetHeight);
         connect(anim, &QPropertyAnimation::finished, this, [anim](){
             auto widget = static_cast<QWidget *>(anim->targetObject());
             widget->setMinimumHeight(widget->height());
