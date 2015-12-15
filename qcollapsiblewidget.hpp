@@ -37,7 +37,7 @@ class QCollapsibleWidget : public QWidget
     Q_OBJECT
 
 public:
-    enum class ResizeMode {
+    enum ResizeMode {
         UseWidgetHeight,
         UseWidgetSizeHint
     };
@@ -56,24 +56,30 @@ private:
 public:
     /**
      * @brief Constructor
-     * @param resizeMode Decide how the resizing is done
-     *
-     * Use height if you need fixed height, otherwise size hint
+     * @param resizeMode Resize mode
      * @param parent Owner of the widget
      */
-    explicit QCollapsibleWidget(ResizeMode resizeMode = ResizeMode::UseWidgetHeight,
-                                QWidget *parent = 0);
+    explicit QCollapsibleWidget(ResizeMode resizeMode, QWidget *parent = 0);
+
+    /**
+     * @brief Constructor
+     * @param parent Owner of the widget
+     */
+    explicit QCollapsibleWidget(QWidget *parent = 0);
 
     /**
      * @brief Set widget resizing mode
      *
      * Use height if you need fixed height, otherwise size hint
+     * Default is UseWidgetHeight
      * @param newResizeMode New resize mode
      */
     void setResizeMode(ResizeMode newResizeMode);
 
     /**
      * @brief Set animation speed in ms
+     *
+     * Default is 500
      * @param speed New speed
      */
     void setAnimationSpeed(int speed);

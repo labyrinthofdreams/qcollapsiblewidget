@@ -44,6 +44,12 @@ QCollapsibleWidget::QCollapsibleWidget(const ResizeMode resizeMode, QWidget *par
                   "border-radius: 2; height: 30px; text-align: left; padding-left: 10px;}");
 }
 
+QCollapsibleWidget::QCollapsibleWidget(QWidget *parent) :
+    QCollapsibleWidget(UseWidgetHeight, parent)
+{
+
+}
+
 void QCollapsibleWidget::setResizeMode(const ResizeMode newResizeMode)
 {
     resizeMode = newResizeMode;

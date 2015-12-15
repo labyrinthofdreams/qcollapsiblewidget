@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
     c->addItem("three");
     c->setFixedHeight(100);
 
-    QCollapsibleWidget *w = new QCollapsibleWidget;
+    QCollapsibleWidget *w = new QCollapsibleWidget(QCollapsibleWidget::UseWidgetHeight);
     w->addWidget(l, "Hello", true);
     w->addWidget(d, "World");
     w->addWidget(c, "AAA");
