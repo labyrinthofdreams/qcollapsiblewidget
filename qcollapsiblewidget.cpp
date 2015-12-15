@@ -96,5 +96,5 @@ void QCollapsibleWidget::buttonPressed()
         });
     }
 
-    anim->start(QPropertyAnimation::DeleteWhenStopped);
+    anim->start();
 }
