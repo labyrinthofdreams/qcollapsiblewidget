@@ -65,6 +65,14 @@ public:
                                 QWidget *parent = 0);
 
     /**
+     * @brief Set widget resizing mode
+     *
+     * Use height if you need fixed height, otherwise size hint
+     * @param newResizeMode New resize mode
+     */
+    void setResizeMode(ResizeMode newResizeMode);
+
+    /**
      * @brief Set animation speed in ms
      * @param speed New speed
      */

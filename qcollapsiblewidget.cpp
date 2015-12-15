@@ -44,6 +44,11 @@ QCollapsibleWidget::QCollapsibleWidget(const ResizeMode resizeMode, QWidget *par
                   "border-radius: 2; height: 30px; text-align: left; padding-left: 10px;}");
 }
 
+void QCollapsibleWidget::setResizeMode(const ResizeMode newResizeMode)
+{
+    resizeMode = newResizeMode;
+}
+
 void QCollapsibleWidget::setAnimationSpeed(const int speed)
 {
     animationSpeed = speed;
