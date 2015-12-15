@@ -31,10 +31,11 @@ THE SOFTWARE.
 #include <QVBoxLayout>
 #include "qcollapsiblewidget.hpp"
 
-QCollapsibleWidget::QCollapsibleWidget(QWidget *parent)
+QCollapsibleWidget::QCollapsibleWidget(const ResizeMode resizeMode, QWidget *parent)
     : QWidget(parent),
       layout(new QVBoxLayout),
-      animationSpeed(500)
+      animationSpeed(500),
+      resizeMode(resizeMode)
 {
     layout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding));
     layout->setSpacing(0);
@@ -72,7 +73,9 @@ void QCollapsibleWidget::buttonPressed()
     auto anim = new QPropertyAnimation(next, "maximumHeight", this);
     anim->setDuration(animationSpeed);
     if(!next->isVisible()) {
-        const auto widgetHeight = next->height();
+        const auto widgetHeight = resizeMode == ResizeMode::UseWidgetHeight
+                                  ? next->height()
+                                  : next->sizeHint().height();
         next->setFixedHeight(1);
         next->setHidden(false);
         anim->setStartValue(next->height());

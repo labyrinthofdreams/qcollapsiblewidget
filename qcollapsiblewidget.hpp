@@ -36,18 +36,33 @@ class QCollapsibleWidget : public QWidget
 {
     Q_OBJECT
 
+public:
+    enum class ResizeMode {
+        UseWidgetHeight,
+        UseWidgetSizeHint
+    };
+
+private:
+
     //! Layout
     QVBoxLayout *layout;
 
     //! Animation speed
     int animationSpeed;
 
+    //! Widget resizing mode
+    ResizeMode resizeMode;
+
 public:
     /**
      * @brief Constructor
+     * @param resizeMode Decide how the resizing is done
+     *
+     * Use height if you need fixed height, otherwise size hint
      * @param parent Owner of the widget
      */
-    explicit QCollapsibleWidget(QWidget *parent = 0);
+    explicit QCollapsibleWidget(ResizeMode resizeMode = ResizeMode::UseWidgetHeight,
+                                QWidget *parent = 0);
 
     /**
      * @brief Set animation speed in ms
