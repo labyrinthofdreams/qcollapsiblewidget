@@ -43,8 +43,15 @@ MainWindow::MainWindow(QWidget *parent) :
     d->addItem("three");
     d->setFixedHeight(100);
 
+    auto c = new QListWidget;
+    c->addItem("one");
+    c->addItem("two");
+    c->addItem("three");
+    c->setFixedHeight(100);
+
     QCollapsibleWidget *w = new QCollapsibleWidget;
     w->addWidget(l, "Hello", true);
     w->addWidget(d, "World");
+    w->addWidget(c, "AAA");
     setCentralWidget(w);
 }
